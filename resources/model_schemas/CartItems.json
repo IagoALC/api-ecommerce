@@ -12,8 +12,8 @@
         "inView": false
     },
     {
-        "name": "total_price",
-        "dbType": "integer,false",
+        "name": "user_id",
+        "dbType": "bigInteger,false,true",
         "htmlType": "number",
         "validations": "required",
         "searchable": true,
@@ -24,10 +24,10 @@
         "inView": true
     },
     {
-        "name": "status",
-        "dbType": "string",
-        "htmlType": "text",
-        "validations": "required|string|max:255|string|max:255",
+        "name": "product_id",
+        "dbType": "bigInteger,false,true",
+        "htmlType": "number",
+        "validations": "required",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -36,22 +36,10 @@
         "inView": true
     },
     {
-        "name": "created_by",
-        "dbType": "bigInteger,false,true",
+        "name": "quantity",
+        "dbType": "integer,false",
         "htmlType": "number",
-        "validations": "nullable|nullable",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
-        "name": "updated_by",
-        "dbType": "bigInteger,false,true",
-        "htmlType": "number",
-        "validations": "nullable|nullable",
+        "validations": "required",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -97,14 +85,10 @@
     },
     {
         "type": "relation",
-        "relation": "1tm,OrderDetail,order_id"
+        "relation": "mt1,Product,product_id"
     },
     {
         "type": "relation",
-        "relation": "1tm,OrderItem,order_id"
-    },
-    {
-        "type": "relation",
-        "relation": "1tm,Payment,order_id"
+        "relation": "mt1,User,user_id"
     }
 ]

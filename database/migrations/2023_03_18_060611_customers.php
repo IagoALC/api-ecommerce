@@ -14,10 +14,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id('id');
-            $table->integer('total_price');
-            $table->string('status');
+            $table->foreignId('user_id')->index()->constrained()->onDelete("CASCADE")->onUpdate("CASCADE");
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('phone')->nullable();
+            $table->string('status')->nullable();
             $table->foreignIdFor(User::class, 'created_by')->nullable();
             $table->foreignIdFor(User::class, 'updated_by')->nullable();
             $table->timestamps();
@@ -32,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::drop('orders');
+        Schema::drop('customers');
     }
 };

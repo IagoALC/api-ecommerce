@@ -9,6 +9,8 @@ use App\Repositories\OrdersRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use App\Http\Requests\UpdateOrdersRequest;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class OrdersAPIController
@@ -23,86 +25,39 @@ class OrdersAPIController extends AppBaseController
     }
 
     /**
-     * Display a listing of the Orders.
-     * GET|HEAD /orders
+     * Display a listing of the Forms.
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
-        $orders = $this->ordersRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
-
-        return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully');
-    }
-
-    /**
-     * Store a newly created Orders in storage.
-     * POST /orders
-     */
-    public function store(CreateOrdersAPIRequest $request): JsonResponse
-    {
+        $User = auth()->guard('api')->user();
+        Log::debug("MONITORING-LOG OrdersRepository-index: company {$User->company_id} user_id {$User->id} from ip {$request->ip()}");
         $input = $request->all();
-
-        $orders = $this->ordersRepository->create($input);
-
-        return $this->sendResponse($orders->toArray(), 'Orders saved successfully');
+        $resp = $this->ordersRepository->filter($input, $User);
+        return $resp->toJson(); 
     }
 
-    /**
-     * Display the specified Orders.
-     * GET|HEAD /orders/{id}
-     */
-    public function show($id): JsonResponse
+    public function store(CreateOrdersAPIRequest $request)
     {
-        /** @var Orders $orders */
-        $orders = $this->ordersRepository->find($id);
-
-        if (empty($orders)) {
-            return $this->sendError('Orders not found');
-        }
-
-        return $this->sendResponse($orders->toArray(), 'Orders retrieved successfully');
-    }
-
-    /**
-     * Update the specified Orders in storage.
-     * PUT/PATCH /orders/{id}
-     */
-    public function update($id, UpdateOrdersAPIRequest $request): JsonResponse
-    {
+        $User = auth()->guard('api')->user();
+        Log::debug("MONITORING-LOG OrdersRepository-store: company {$User->company_id} user_id {$User->id} from ip {$request->ip()}");
         $input = $request->all();
-
-        /** @var Orders $orders */
-        $orders = $this->ordersRepository->find($id);
-
-        if (empty($orders)) {
-            return $this->sendError('Orders not found');
-        }
-
-        $orders = $this->ordersRepository->update($input, $id);
-
-        return $this->sendResponse($orders->toArray(), 'Orders updated successfully');
+        $resp = $this->ordersRepository->create($input);
+        return $resp->toJson();
     }
 
-    /**
-     * Remove the specified Orders from storage.
-     * DELETE /orders/{id}
-     *
-     * @throws \Exception
-     */
-    public function destroy($id): JsonResponse
+    public function update($id, UpdateOrdersAPIRequest $request)
     {
-        /** @var Orders $orders */
-        $orders = $this->ordersRepository->find($id);
+        $User = auth()->guard('api')->user();
+        Log::debug("MONITORING-LOG OrdersRepository-update: company {$User->company_id} user_id {$User->id} from ip {$request->ip()}");
+        $resp = $this->ordersRepository->update($request->all(), $id);
+        return $resp->toJson();
+    }
 
-        if (empty($orders)) {
-            return $this->sendError('Orders not found');
-        }
-
-        $orders->delete();
-
-        return $this->sendSuccess('Orders deleted successfully');
+    public function destroy($id)
+    {
+        $User = auth()->guard('api')->user();
+        Log::debug("MONITORING-LOG OrdersRepository-destroy: company {$User->company_id} user_id {$User->id}");
+        $this->ordersRepository->delete($id);
+        return "true";     
     }
 }

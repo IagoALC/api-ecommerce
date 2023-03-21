@@ -12,8 +12,8 @@
         "inView": false
     },
     {
-        "name": "total_price",
-        "dbType": "integer,false",
+        "name": "order_id",
+        "dbType": "bigInteger,false,true",
         "htmlType": "number",
         "validations": "required",
         "searchable": true,
@@ -24,7 +24,19 @@
         "inView": true
     },
     {
-        "name": "status",
+        "name": "product_id",
+        "dbType": "bigInteger,false,true",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "quantity",
         "dbType": "string",
         "htmlType": "text",
         "validations": "required|string|max:255|string|max:255",
@@ -36,22 +48,10 @@
         "inView": true
     },
     {
-        "name": "created_by",
-        "dbType": "bigInteger,false,true",
+        "name": "unit_price",
+        "dbType": "integer,false",
         "htmlType": "number",
-        "validations": "nullable|nullable",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
-        "name": "updated_by",
-        "dbType": "bigInteger,false,true",
-        "htmlType": "number",
-        "validations": "nullable|nullable",
+        "validations": "required",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -97,14 +97,10 @@
     },
     {
         "type": "relation",
-        "relation": "1tm,OrderDetail,order_id"
+        "relation": "mt1,Order,order_id"
     },
     {
         "type": "relation",
-        "relation": "1tm,OrderItem,order_id"
-    },
-    {
-        "type": "relation",
-        "relation": "1tm,Payment,order_id"
+        "relation": "mt1,Product,product_id"
     }
 ]

@@ -1,6 +1,6 @@
 [
     {
-        "name": "id",
+        "name": "code",
         "dbType": "bigInteger,true,true",
         "htmlType": "number",
         "validations": "",
@@ -12,19 +12,7 @@
         "inView": false
     },
     {
-        "name": "total_price",
-        "dbType": "integer,false",
-        "htmlType": "number",
-        "validations": "required",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
-        "name": "status",
+        "name": "name",
         "dbType": "string",
         "htmlType": "text",
         "validations": "required|string|max:255|string|max:255",
@@ -36,22 +24,10 @@
         "inView": true
     },
     {
-        "name": "created_by",
-        "dbType": "bigInteger,false,true",
-        "htmlType": "number",
-        "validations": "nullable|nullable",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
-        "name": "updated_by",
-        "dbType": "bigInteger,false,true",
-        "htmlType": "number",
-        "validations": "nullable|nullable",
+        "name": "states",
+        "dbType": "text",
+        "htmlType": "textarea",
+        "validations": "nullable|string|nullable|string",
         "searchable": true,
         "fillable": true,
         "primary": false,
@@ -97,14 +73,10 @@
     },
     {
         "type": "relation",
-        "relation": "1tm,OrderDetail,order_id"
+        "relation": "1tm,CustomerAddress,country_code"
     },
     {
         "type": "relation",
-        "relation": "1tm,OrderItem,order_id"
-    },
-    {
-        "type": "relation",
-        "relation": "1tm,Payment,order_id"
+        "relation": "1tm,OrderDetail,country_code"
     }
 ]

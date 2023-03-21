@@ -21,3 +21,27 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('orders', App\Http\Controllers\API\OrdersAPIController::class)
     ->except(['create', 'edit']);
+
+Route::resource('products', App\Http\Controllers\API\ProductsAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('cart-items', App\Http\Controllers\API\CartItemsAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('countries', App\Http\Controllers\API\CountriesAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('customers', App\Http\Controllers\API\CustomersAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('customer-addresses', App\Http\Controllers\API\CustomerAddressesAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('payments', App\Http\Controllers\API\PaymentsAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('order-items', App\Http\Controllers\API\OrderItemsAPIController::class)
+    ->except(['create', 'edit']);
+
+Route::resource('order-details', App\Http\Controllers\API\OrderDetailsAPIController::class)
+    ->except(['create', 'edit']);
